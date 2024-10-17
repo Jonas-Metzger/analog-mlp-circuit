@@ -41,12 +41,13 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Source the Spack environment and use binary cache as much as possible
+# Source the Spack environment, add the correct mirror, and trust buildcache keys
 RUN . $SPACK_ROOT/share/spack/setup-env.sh && \
-    spack mirror add spack-mirror https://mirror.spack.io && \
+    spack mirror add v0.22.2 https://binaries.spack.io/v0.22.2 && \
+    spack buildcache keys --install --trust && \
     spack compiler find && \
-    spack install --use-cache-only xyce || spack install xyce && \
-    spack install miniforge3
+    spack install --use-cache-only xyce && \
+    spack install --use-cache-only miniforge3
 
 # Add Spack-installed miniforge3 to PATH
 ENV PATH="/opt/spack/opt/spack/linux-ubuntu20.04-x86_64/gcc-*/miniforge3-*/bin:$PATH"
