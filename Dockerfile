@@ -12,10 +12,40 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Source the Spack environment and install xyce and miniforge3 using Spack
-RUN . $SPACK_ROOT/share/spack/setup-env.sh && spack compiler find
-RUN . $SPACK_ROOT/share/spack/setup-env.sh && spack install xyce
-RUN . $SPACK_ROOT/share/spack/setup-env.sh && spack install miniforge3
+# Use the spack/ubuntu-focal image as the base image
+FROM spack/ubuntu-focal
+
+# Set environment variables for Spack
+SHELL ["/bin/bash", "-c"]
+ENV SPACK_ROOT=/opt/spack
+
+# Update the image and install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Source the Spack environment and use binary cache as much as possible
+RUN . $SPACK_ROOT/share/spack/setup-env.sh && \
+    spack mirror add spack-mirror https://mirror.spack.io && \
+    spack buildcache update-index && \
+    spack compiler find && \
+    spack install --use-cache-only xyce || spack install xyce && \
+    spack install miniforge3
+
+# Add Spack-installed miniforge3 to PATH
+ENV PATH="/opt/spack/opt/spack/linux-ubuntu20.04-x86_64/gcc-*/miniforge3-*/bin:$PATH"
+
+# Create a Conda environment and install required packages (torch, numpy, pyspice, matplotlib)
+RUN conda init bash && \
+    conda create -n myenv -y python=3.9 && \
+    echo "conda activate myenv" >> ~/.bashrc && \
+    conda activate myenv && \
+    conda install -y pytorch numpy pyspice matplotlib
+
+# Ensure Spack environment and conda environment are activated in the container
+CMD ["/bin/bash"]
 
 # Add Spack-installed miniforge3 to PATH
 # ENV PATH="/opt/spack/opt/spack/linux-ubuntu20.04-x86_64/gcc-*/miniforge3-*/bin:$PATH"
