@@ -13,10 +13,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Source the Spack environment and install xyce and miniforge3 using Spack
-RUN . $SPACK_ROOT/share/spack/setup-env.sh && \
-    spack compiler find && \
-    spack install xyce && \
-    spack install miniforge3
+RUN . $SPACK_ROOT/share/spack/setup-env.sh && spack compiler find
+
+RUN spack install xyce
+RUN spack install miniforge3
 
 # Add Spack-installed miniforge3 to PATH
 ENV PATH="/opt/spack/opt/spack/linux-ubuntu20.04-x86_64/gcc-*/miniforge3-*/bin:$PATH"
