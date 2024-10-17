@@ -44,7 +44,6 @@ RUN apt-get update && apt-get install -y \
 # Source the Spack environment and use binary cache as much as possible
 RUN . $SPACK_ROOT/share/spack/setup-env.sh && \
     spack mirror add spack-mirror https://mirror.spack.io && \
-    spack buildcache update-index -d https://mirror.spack.io && \
     spack compiler find && \
     spack install --use-cache-only xyce || spack install xyce && \
     spack install miniforge3
