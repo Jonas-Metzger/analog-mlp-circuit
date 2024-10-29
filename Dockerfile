@@ -20,6 +20,12 @@ RUN . $SPACK_ROOT/share/spack/setup-env.sh && \
     spack compiler find && \
     spack install -j2 xyce
 
+RUN curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+
+RUN bash Miniforge3-$(uname)-$(uname -m).sh -b
+
+RUN /root/miniforge3/bin/conda install -y litex-hub::open_pdks.sky130a
+
 RUN pip install torch numpy pyspice matplotlib tqdm
 
 RUN echo "source /opt/spack/share/spack/setup-env.sh" >> ~/.bashrc
