@@ -4,7 +4,7 @@ Recent work following [Scellier and Bengio (2016)](https://arxiv.org/abs/1602.05
 
 ![](figures/analogmlp.png)
 
-The circuit above is capable of performing (the equilibrium-propagation equivalent of) a forward and backward pass of a 3-layer MLP, but it's not showing any of the surrounding control circuitry. The figure is modified from [Scellier (2024)](https://arxiv.org/abs/2402.11674). The core difference to the original circuit is that I'm using regular transistors as (nonlinear) parametrized synapses, where the weights are represented by gate voltages stored in capacitors. Adding some control circuitry and arranging the weight matrix in a crossbar array structure, we see that our analog multiply-and-accumulate operation is essentially performed by a standard 2T1C DRAM array. A 2x2 example is shown below:
+The circuit above is capable of performing (the equilibrium-propagation equivalent of) a forward and backward pass of a 3-layer MLP, but it's not showing any of the surrounding control circuitry. The figure is modified from [Scellier (2024)](https://arxiv.org/abs/2402.11674). The core difference to the original circuit is that I'm using regular transistors as (nonlinear) parametrized synaptic conductances, where the weights are represented by gate voltages stored in capacitors. Adding some control circuitry and arranging the weight matrix in a crossbar array structure, we see that our analog multiply-and-accumulate operation is essentially performed by a standard 2T1C DRAM array. A 2x2 example is shown below:
 
 ![](figures/2t1ccrossbar.png)
 
