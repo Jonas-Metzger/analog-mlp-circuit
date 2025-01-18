@@ -21,3 +21,13 @@ My circuit (in `analog_circuit.ipynb`) is already capable of fitting a simple si
 but I wasn't yet able to get larger circuits to train reliably against more complex target functions. Biasing the circuit well for optimal learning becomes quite the challenge, and will require an expert electrical engineer with great deep learning intuition. 
 
 Nonetheless, to the best of my knowledge, the simulation above is the first fully transient simulation of end-to-end training of an analog neural network accelerator. Previous works have only computed operating points using SPICE, and computed and applied the gradient updates digitally, outside of the simulation. The benefit of our circuit is that it is fully VLSI compatible, and could operate end-to-end without digital circuitry. Another benefit is that an  end-to-end transient simulation now allows us to add e.g. transient noise sources to the circuit, and get a realistic picture of how well the learned neural network is able to work around the regularizing effect of thermal, flicker, and shot noise. This, and much else, is left for future work.
+
+# How To Run
+
+Installing the relevant software (Xyce and the SkywaterPDK) is a pain. Welcome to the world of electrical engineering. 
+
+Fortunately, there's a docker container setting everything up for you.
+
+The easiest way to build and use it is to open the repo in VSCode, install the Dev Container and Jupyter extensions, and follow the prompts.
+
+Then the notebook should simply run, if you select the python runtime installed in the container.
