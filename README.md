@@ -14,7 +14,7 @@ Using the Skywater 130nm PDK, PySpice and Sandia Lab's Xyce Simulator, I impleme
 
 ![](figures/synapse.png)
 
-My circuit is already capable of fitting a simple sine-wave with a 2-layer network:
+My circuit (in `analog_mlp.ipynb`) is already capable of fitting a simple sine-wave with a 2-layer network:
 
 ![](figures/training_progress.gif)
 
